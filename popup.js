@@ -1,6 +1,11 @@
 function getVideo() {
     const video = document.querySelector("video");
 
+    if (video == null) {
+        alert("No Video found");
+        return;
+    }
+
     let socket = null;
     try {
         // socket = new WebSocket('wss://51.77.132.51:8080/', 'echo-protocol');
@@ -19,10 +24,12 @@ function getVideo() {
             alert("Connection closed from server")
         };
 
+
         this.onmessage = function (event) {
             const data = JSON.parse(event.data);
 
-            video.currentTime = data['time'];
+            if (Math.abs(video.currentTime - data['time']) > 0.1)
+                video.currentTime = data['time'];
 
             if (data['command'] === "pause") {
                 video.pause();
@@ -44,10 +51,17 @@ function getVideo() {
                 "time": video.currentTime
             }))
         })
+
+        video.addEventListener('seeked', function () {
+            client.send(JSON.stringify({
+                "command": "seeked",
+                "time": video.currentTime
+            }))
+        })
     };
 }
 
-changeColor.addEventListener("click", async () => {
+createParty.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
 
     chrome.scripting.executeScript({
@@ -56,3 +70,13 @@ changeColor.addEventListener("click", async () => {
     });
 });
 
+
+joinParty.addEventListener('click', async () => {
+    document.querySelector("#home").style.display = 'none';
+    document.querySelector("#join").style.display = 'block';
+})
+
+backButton.addEventListener('click', async () => {
+    document.querySelector("#home").style.display = 'block';
+    document.querySelector("#join").style.display = 'none';
+})
