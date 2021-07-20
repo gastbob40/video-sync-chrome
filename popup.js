@@ -70,7 +70,29 @@ createParty.addEventListener("click", async () => {
     });
 });
 
+function notify() {
+    const message = "az"
 
+    const body = document.querySelector("body");
+    const notification = document.createElement("div");
+    notification.classList.add("party-notification")
+
+    body.appendChild(notification);
+
+    console.log(message);
+}
+
+test.addEventListener("click", async () => {
+    let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+
+    chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        function: notify(),
+    });
+});
+
+
+/// Events about page changing
 joinParty.addEventListener('click', async () => {
     document.querySelector("#home").style.display = 'none';
     document.querySelector("#join").style.display = 'block';
