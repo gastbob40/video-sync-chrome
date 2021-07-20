@@ -3,7 +3,7 @@ createParty.addEventListener("click", async () => {
 
     chrome.scripting.executeScript({
         target: {tabId: tab.id},
-        files: ['js/inject/main.js'],
+        files: ['js/inject/index.js'],
     });
 });
 
