@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:8080/';
+const baseUrl = 'https://video-party.gastbob40.ovh:8082/';
 
 createParty.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({active: true, currentWindow: true});

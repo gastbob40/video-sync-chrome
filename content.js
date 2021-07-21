@@ -70,8 +70,8 @@ function syncVideo(code) {
 
     let socket = null;
     try {
-        // socket = new WebSocket('wss://video-party.gastbob40.ovh:8082/', 'echo-protocol');
-        socket = new WebSocket('ws://localhost:8080/', 'echo-protocol');
+        socket = new WebSocket('wss://video-party.gastbob40.ovh:8082/', 'echo-protocol');
+        // socket = new WebSocket('ws://localhost:8080/', 'echo-protocol');
     } catch (e) {
         notify("Cannot connect to server")
         return;
