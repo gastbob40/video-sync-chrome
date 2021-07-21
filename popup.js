@@ -64,12 +64,15 @@ codeInput.addEventListener('change', async (value) => {
                     document.querySelector("#join").style.display = 'none';
                     document.querySelector("#party").style.display = 'block';
                     document.querySelector("#accessCode").innerHTML = room.code;
+                    chrome.storage.sync.set({room: room});
 
                     if (tab.url !== room.pageUrl) {
-                        chrome.tabs.update(tab.id, {url: room.pageUrl});
+                        chrome.tabs.update(tab.id, {url: room.pageUrl}).then(x => {
+                            chrome.tabs.sendMessage(tab.id, {kind: 'sync', code: room.code});
+                        });
+                    } else {
+                        chrome.storage.sync.set({room: room});
                     }
-                    chrome.storage.sync.set({room: room});
-                    chrome.tabs.sendMessage(tab.id, {kind: 'sync', code: room.code});
                 });
             } else {
                 chrome.tabs.sendMessage(tab.id, {kind: 'notify', message: "Cannot find room with this code"});
