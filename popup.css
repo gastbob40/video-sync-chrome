@@ -73,3 +73,15 @@ h1 > svg:hover {
     margin-bottom: 8px;
     color: #9a8f84;
 }
+
+.code-input {
+    border-radius: 4px;
+    height: 30px;
+    padding: 16px 16px;
+    width: 100%;
+    letter-spacing: 2px;
+    text-align: center;
+    background: transparent;
+    border: 2px solid #ef3e3a;
+    color: white;
+}
