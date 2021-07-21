@@ -74,7 +74,7 @@ function getVideo() {
 
     let socket = null;
     try {
-        socket = new WebSocket('wss://video-party.gastbob40.ovh/', 'echo-protocol')
+        socket = new WebSocket('wss://video-party.gastbob40.ovh:8082/', 'echo-protocol');
     } catch (e) {
         notify("Cannot connect to server")
         return;
