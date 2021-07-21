@@ -61,9 +61,11 @@ function notify(text) {
 }
 
 function syncVideo(code) {
+    console.log('sync video function called');
     const video = document.querySelector("video");
 
     if (video == null) {
+        console.log('no video found');
         notify("No Video found");
         return;
     }
