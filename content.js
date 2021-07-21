@@ -58,13 +58,9 @@ function notify(text) {
     setTimeout(() => {
         notification.parentNode.removeChild(notification);
     }, notificationTime * 1000 + 300);
-
-    console.log(message);
 }
 
-function getVideo() {
-
-
+function syncVideo(code) {
     const video = document.querySelector("video");
 
     if (video == null) {
@@ -74,7 +70,8 @@ function getVideo() {
 
     let socket = null;
     try {
-        socket = new WebSocket('wss://video-party.gastbob40.ovh:8082/', 'echo-protocol');
+        // socket = new WebSocket('wss://video-party.gastbob40.ovh:8082/', 'echo-protocol');
+        socket = new WebSocket('ws://localhost:8080/', 'echo-protocol');
     } catch (e) {
         notify("Cannot connect to server")
         return;
@@ -85,6 +82,11 @@ function getVideo() {
         let client = this;
         console.log("Connexion établie.");
 
+        client.send(JSON.stringify({
+            "command": "join",
+            "code": code
+        }))
+
         this.onclose = function (event) {
             alert("Connection closed from server")
         };
@@ -92,6 +94,8 @@ function getVideo() {
 
         this.onmessage = function (event) {
             const data = JSON.parse(event.data);
+
+            console.log(data);
 
             if (Math.abs(video.currentTime - data['time']) > 0.1)
                 video.currentTime = data['time'];
@@ -106,24 +110,40 @@ function getVideo() {
         video.addEventListener('pause', function () {
             client.send(JSON.stringify({
                 "command": "pause",
-                "time": video.currentTime
+                "time": video.currentTime,
+                "code": code
             }))
         })
 
         video.addEventListener('play', function () {
             client.send(JSON.stringify({
                 "command": "play",
-                "time": video.currentTime
+                "time": video.currentTime,
+                "code": code
             }))
         })
 
         video.addEventListener('seeked', function () {
             client.send(JSON.stringify({
                 "command": "seeked",
-                "time": video.currentTime
+                "time": video.currentTime,
+                "code": code
             }))
         })
     };
 }
 
-getVideo();
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+    sendResponse("hello");
+
+    switch (msg.kind) {
+        case "notify":
+            notify(msg.message);
+            break;
+        case "sync":
+            syncVideo(msg.code);
+            break
+        default:
+            break;
+    }
+});

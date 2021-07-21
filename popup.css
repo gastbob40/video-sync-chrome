@@ -34,7 +34,7 @@ h1 > svg:hover {
     fill: #ea0f0a;
 }
 
-button {
+.button {
     padding: 8px;
     font-size: 1.2em;
     width: 100%;
@@ -44,26 +44,32 @@ button {
     margin-bottom: 8px;
 }
 
-button.primary {
+.primary {
     background: #ef3e3a;
     border: 0;
     color: white;
 }
 
-button.secondary {
+.secondary {
     background: transparent;
     border: 2px solid #ef3e3a;
     color: white;
 }
 
-button:hover {
+.button:hover {
     transform: translateY(-1px);
 }
 
-button.primary:hover {
+.primary:hover {
     background: #ea0f0a;
 }
 
-button.secondary:hover {
+.secondary:hover {
     background: #ef3e3a;
+}
+
+.text-muted {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    color: #9a8f84;
 }
