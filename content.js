@@ -91,7 +91,6 @@ function syncVideo(code) {
             alert("Connection closed from server")
         };
 
-
         this.onmessage = function (event) {
             const data = JSON.parse(event.data);
 

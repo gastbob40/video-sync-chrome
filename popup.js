@@ -21,17 +21,6 @@ createParty.addEventListener("click", async () => {
             });
         }
     });
-
-    /*
-        chrome.scripting.executeScript({
-            target: {tabId: tab.id},
-            files: ['js/inject/index.js'],
-      µ});*/
-
-    // chrome.tabs.sendMessage(tab.id, {kind: 'notify', message: "Room created"}, (dom) => {
-    // });
-
-
 });
 
 /// Events about page changing
