@@ -105,8 +105,19 @@ function syncVideo(code) {
                 video.pause();
             } else if (data['command'] === "play") {
                 video.play();
+            } else if (data['command'] === 'ratechange') {
+                video.playbackRate = parseFloat(data['speed']);
             }
         };
+
+        video.addEventListener('ratechange', (event) => {
+            client.send(JSON.stringify({
+                "command": "ratechange",
+                "time": video.currentTime,
+                "speed": video.playbackRate,
+                "code": code
+            }))
+        });
 
         video.addEventListener('pause', function () {
             client.send(JSON.stringify({
